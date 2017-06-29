@@ -59,6 +59,14 @@
          ?>
         </div>-->
     </div>
+
+    <script>
+      jQuery( document ).ready( function( $ ) {
+        $('.ver_home').click(function(){
+            window.location.href = "<?php echo get_home_url(); ?>"
+        })
+      })
+    </script>
 </footer>
 
 </div><!-- #page -->

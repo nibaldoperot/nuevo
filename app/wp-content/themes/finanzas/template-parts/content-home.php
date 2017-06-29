@@ -1,0 +1,2 @@
+<button type="button" class="btn btn-default ver_perfiles btn-lg"><i class="fa fa-home left"></i> Ver Perfiles</button>
+<button type="button" class="btn btn-default ver_pagos btn-lg"><i class="fa fa-money left"></i> Ver Pagos</button>

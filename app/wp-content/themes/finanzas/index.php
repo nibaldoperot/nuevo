@@ -18,7 +18,7 @@ get_header(); ?>
 $blog_img = get_theme_mod( 'blog_img', '' ); 
   
 ?>
- <div class="header header-filter" style="background-image: url('<?php echo $blog_img;?>');">
+ <!--<div class="header header-filter" style="background-image: url('<?php echo $blog_img;?>');">
     <div class="container">
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -30,7 +30,7 @@ $blog_img = get_theme_mod( 'blog_img', '' );
         </div>
       </div>
     </div>
-  </div>
+  </div>-->
 
 <div class="main main-raised">
     <div class="section">

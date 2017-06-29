@@ -24,4 +24,12 @@ jQuery( document ).ready( function( $ ) {
         $('.boletas').show();
         $('h1').text('Pagos');
     })
+
+    $('.ver_pagos').click(function(){
+        window.location.href = window.location.href + 'pagos'
+    })
+
+    $('.ver_perfiles').click(function(){
+        window.location.href = window.location.href + 'perfiles'
+    })
 });
