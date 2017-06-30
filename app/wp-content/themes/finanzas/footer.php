@@ -65,6 +65,11 @@
         $('.ver_home').click(function(){
             window.location.href = "<?php echo get_home_url(); ?>"
         })
+
+        $('.cambiar_estado').click(function(){
+            var y = "<?php get_field('')?>"
+            var x = "<?php update_field('field_123456', $count); ?>"  
+        })
       })
     </script>
 </footer>

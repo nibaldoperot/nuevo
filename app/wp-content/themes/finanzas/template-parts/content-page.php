@@ -2,19 +2,19 @@
 		if(is_page('home')){
 			get_template_part( 'template-parts/content', 'home' );
 		}else{ ?>
-			<a class="ver_home btn btn-default"><i class="fa fa-home left"></i> Home</a>
+			<button type="button" style="width:93%;" class="ver_home btn btn-default btn-lg"><i class="fa fa-home left"></i> Home</button>
+			
 			<?php
 				if(is_page('perfiles')){
 					get_template_part( 'template-parts/content', 'perfiles' );
 				}
 
 				if(is_page('pagos')){ ?>
-					<div style="padding: 10px">
-						<button class="boletas_button">Boletas</button>
-						<button class="facturas_button">Facturas</button>
-						<button class="todos_button">Todos</button>
-					
-					<?php get_template_part( 'template-parts/content', 'pagos' );?>
+					<div>
+						<button type="button" style="width:31%;" class="btn btn-info boletas_button btn-lg">Boletas</button>
+						<button type="button" style="width:31%;" class="btn btn-success facturas_button btn-lg">Facturas</button>
+						<button type="button" style="width:31%;" class="btn btn-danger todos_button btn-lg">Todos</button>
+						<?php get_template_part( 'template-parts/content', 'pagos' );?>
 					
 					</div> 
 			<?php }

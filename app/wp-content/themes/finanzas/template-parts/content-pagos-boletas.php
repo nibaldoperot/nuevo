@@ -24,14 +24,18 @@ if ( $the_query->have_posts() ) {
     
         ?>
         
-        <h4> <?php the_author();?> | <?php echo get_the_title(); ?> | $<?php echo number_format((int)get_field('valor_boleta'), 0, '', '.');?>  | <?php echo $status; ?>  </h4> 
-        <p>Fecha : <?php echo substr(get_field('fecha_creacion_boleta'),6,2);?>-<?php echo substr(get_field('fecha_creacion_boleta'),4,2);?>-<?php echo substr(get_field('fecha_creacion_boleta'),0,4); ?>  - 
-        Pago :  <?php echo $vencimiento; ?>
-        </p>
-        
-        <div class="documento" >
-            <small>Documento</small>
-            <small><?php the_content();?></small>
+        <div class="card card-block">
+            <div>
+                <h4 class="card-title "><?php the_author();?> | <?php echo get_the_title(); ?></h4>
+                <b class="card-text">$<?php echo number_format((int)get_field('valor_boleta'), 0, '', '.');?>  | <?php echo $status; ?></b>
+                <p>Fecha : <?php echo substr(get_field('fecha_creacion_boleta'),6,2);?>-<?php echo substr(get_field('fecha_creacion_boleta'),4,2);?>-<?php echo substr(get_field('fecha_creacion_boleta'),0,4); ?>  - 
+                Pago :  <?php echo $vencimiento; ?>
+                </p>
+                <div class="documento" >
+                    <small>Documento</small>
+                    <small><?php the_content();?></small>
+                </div>
+            </div>		
         </div>
         
 <?php }
