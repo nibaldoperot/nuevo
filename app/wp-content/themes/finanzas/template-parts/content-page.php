@@ -11,9 +11,13 @@
 
 				if(is_page('pagos')){ ?>
 					<div>
-						<button type="button" style="width:31%;" class="btn btn-info boletas_button btn-lg">Boletas</button>
-						<button type="button" style="width:31%;" class="btn btn-success facturas_button btn-lg">Facturas</button>
-						<button type="button" style="width:31%;" class="btn btn-danger todos_button btn-lg">Todos</button>
+						<button type="button" style="width:31%;" class="btn btn-default todos_button btn-md">Todas</button>
+						<button type="button" style="width:31%;" class="btn btn-default boletas_button btn-md">Boletas</button>
+						<button type="button" style="width:31%;" class="btn btn-default facturas_button btn-md">Facturas</button>
+
+						<button type="button" style="width:31%;" class="btn btn-default ver_todas btn-sm">Todas</button>
+						<button type="button" style="width:31%;" class="btn btn-default ver_pagadas btn-sm">Pagadas</button>
+						<button type="button" style="width:31%;" class="btn btn-default ver_pendientes btn-sm">Pendientes</button>
 						<?php get_template_part( 'template-parts/content', 'pagos' );?>
 					
 					</div> 

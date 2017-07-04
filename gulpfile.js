@@ -28,11 +28,11 @@ var baseDir = {
 //SCSS compiler
 gulp.task('scss-dev', function(){
 	return gulp.src(baseDir.src+baseDir.scss)
-		.pipe(scss.sync({outputStyle:'nested'}).on('error', scss.logError))
 		.pipe(autoprefixer({
-			browsers:['last 2 version'],
-			cascade: false
+            browsers: ['last 2 versions'],
+            cascade: false
 		}))
+		.pipe(scss.sync({outputStyle:'nested'}).on('error', scss.logError))
 		.pipe(rename(baseDir.cssName))
 		.pipe(gulp.dest(baseDir.dest+baseDir.css))
 		.pipe(browserSync.stream());
@@ -40,10 +40,10 @@ gulp.task('scss-dev', function(){
 gulp.task('scss-prod', function(){
 	return gulp.src(baseDir.src+baseDir.scss)
 		.pipe(scss.sync({outputStyle:'compressed'}).on('error', scss.logError))
-		.pipe(autoprefixer({
-			browsers:['last 2 version'],
-			cascade: false
-		}))
+		// .pipe(autoprefixer({
+		// 	browsers:['last 2 version'],
+		// 	cascade: false
+		// }))
 		.pipe(rename(baseDir.cssName))
 		.pipe(gulp.dest(baseDir.dest+baseDir.css))
 });

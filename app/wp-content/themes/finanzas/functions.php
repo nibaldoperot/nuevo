@@ -309,6 +309,32 @@ function my_remove_meta_boxes() {
 }
 add_action( 'admin_menu', 'my_remove_meta_boxes' );
 
+function theme_styles()  
+{ 
+	wp_register_style( 'finanzascss', get_template_directory_uri() . '/css/finanzas.min.css' );
+	wp_enqueue_style('finanzascss');
+
+}
+add_action('wp_enqueue_scripts', 'theme_styles');
+
+
+function update_pago() {
+
+	$post_id = $_POST['post_id'];
+	$status = $_POST['status'];
+	$tipo = $_POST['tipo'];
+	if($tipo == 'factura'){
+		update_field('pago_factura', $status, $post_id);
+		
+	}
+	if($tipo == 'boleta'){
+		update_field('pago_boleta', $status, $post_id);
+	}
+}
+add_action( 'wp_ajax_nopriv_update_pago',  'update_pago' );
+add_action( 'wp_ajax_update_pago','update_pago' );
+
+
 
 /*********************************************************************************************/
 

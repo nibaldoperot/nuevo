@@ -39,7 +39,7 @@
               ?>
 
               <?php if ($social_icon != '') : ?>
-                <a target="_blank" class="btn btn-social btn-just-icon" href="<?php echo $social_url; ?>">
+                <a target="_blank" value="<?php echo $user_id ?>"class="btn btn-social btn-just-icon" href="<?php echo $social_url; ?>">
                     <i class="fa fa-<?php echo $social_icon; ?>"></i>
                 </a>
               <?php endif; ?>
@@ -65,10 +65,37 @@
         $('.ver_home').click(function(){
             window.location.href = "<?php echo get_home_url(); ?>"
         })
+        
+        $('.material-switch input').click(function(){
+          // e.preventDefault()
+          var str = window.location.href
+          if(str.split('perfiles').length == 2){
+            var location = str.split('perfiles')
+          }else{
+            var location = str.split('pagos')
+          }
+          var ajaxurl = location[0]+'wp-admin/admin-ajax.php'
+          var status= true
+          var post_id=  $(this).attr('id')
+          var tipo=  $(this).attr('data')
+          var status=  $(this).attr('status')
+          if(status == 0) new_status = 1
+          if(status == 1) new_status = 0
+          $.ajax({
+            url: ajaxurl + "?action=update_pago",
+            type: 'post',
+            data: {
+                post_id: post_id,
+                status: new_status,
+                tipo: tipo
+            },
+            success: function(data) {
+              window.location.reload()
+            },
+            error: function(data) {
+            }
+          })
 
-        $('.cambiar_estado').click(function(){
-            var y = "<?php get_field('')?>"
-            var x = "<?php update_field('field_123456', $count); ?>"  
         })
       })
     </script>

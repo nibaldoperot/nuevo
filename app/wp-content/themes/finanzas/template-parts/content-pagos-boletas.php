@@ -1,3 +1,4 @@
+
 <?php
 $args = array(
 	'post_type' => array( 'boletas')
@@ -5,13 +6,12 @@ $args = array(
 $total_boletas=0;
 $total_boletas=0;
 $total_pagos;
-$the_query = new WP_Query( $args );
+$the_query = new WP_Query( $args );?>
 
-if ( $the_query->have_posts() ) {
+<?php if ( $the_query->have_posts() ) {
     while ( $the_query->have_posts() ) {
         $the_query->the_post();
-        $total_boletas += (int)get_field('valor_boleta');
-        $total_pagos += (int)get_field('valor_boleta');
+        $valor = (int)get_field('valor_boleta');
         $vencimiento = strtotime(get_field('fecha_pago_boleta'));
         $d = strtotime(date('d-m-Y'));
         if(get_field('fecha_pago_boleta')!='otro'){
@@ -19,24 +19,26 @@ if ( $the_query->have_posts() ) {
         }else{
             $vencimiento = date('d-m-Y',strtotime(get_field('calendario_boleta')));
         } 
-        $diferencia = strtotime(date('d-m-Y')) - strtotime($vencimiento);
-        $status = $diferencia < 0 ? 'Pago Pendiente ': 'Pago Vencido';
-    
+        $status = get_field('pago_boleta');
+        if($status == 0) $status_text = 'Pend';
+        if($status == 1) $status_text = 'OK';
+        $tipo = 'boleta';
         ?>
+
         
-        <div class="card card-block">
-            <div>
-                <h4 class="card-title "><?php the_author();?> | <?php echo get_the_title(); ?></h4>
-                <b class="card-text">$<?php echo number_format((int)get_field('valor_boleta'), 0, '', '.');?>  | <?php echo $status; ?></b>
-                <p>Fecha : <?php echo substr(get_field('fecha_creacion_boleta'),6,2);?>-<?php echo substr(get_field('fecha_creacion_boleta'),4,2);?>-<?php echo substr(get_field('fecha_creacion_boleta'),0,4); ?>  - 
-                Pago :  <?php echo $vencimiento; ?>
-                </p>
-                <div class="documento" >
-                    <small>Documento</small>
-                    <small><?php the_content();?></small>
-                </div>
-            </div>		
-        </div>
+            <tr class="<?php if($status == 1){ echo 'pagada'; }else{ echo 'pendiente'; } ?>_content <?php echo $tipo; ?>">
+                <td><small><a href="<?php echo $link; ?>"><?php echo get_the_title(); ?></a></small></td>
+                <td><small><?php echo number_format($valor, 0, '', '.'); ?></small></td>
+                <td><small><?php echo $vencimiento; ?></small></td>
+                <td><small><?php echo $status_text; ?></small></td>
+                <td>
+                    <div class="material-switch pull-left">
+                        <input  id="<?php echo $post->ID; ?>" data="<?php echo $tipo; ?>" status="<?php echo $status; ?>" 
+                                name="estadoActual" type="checkbox" <?php if($status == 1) echo 'checked'; ?>/>
+                        <label for="<?php echo $post->ID; ?>" class="label-primary" ></label>
+                    </div>
+                </td>
+            </tr>
         
 <?php }
 wp_reset_postdata();
@@ -44,8 +46,8 @@ wp_reset_postdata();
     <h3>No se encontraron boletas</h3>
 <?php   } ?>
 
-    <div class="total_boletas">
-        <h3>Total boletas: <?php echo number_format($total_boletas, 0, '', '.');?></h3>
-    </div>
+    <!--<div class="total_boletas">
+        <h3>Total boletas: <?php //echo number_format($total_boletas, 0, '', '.');?></h3>
+    </div>-->
 
 </div>
