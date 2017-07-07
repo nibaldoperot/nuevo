@@ -2,7 +2,7 @@
 		if(is_page('home')){
 			get_template_part( 'template-parts/content', 'home' );
 		}else{ ?>
-			<button type="button" style="width:93%;" class="ver_home btn btn-default btn-lg"><i class="fa fa-home left"></i> Home</button>
+			<!--<button type="button" style="width:93%;" class="ver_home btn btn-default btn-lg"><i class="fa fa-home left"></i> Home</button>-->
 			
 			<?php
 				if(is_page('perfiles')){
@@ -22,6 +22,12 @@
 					
 					</div> 
 			<?php }
+				if(is_page('campanas')){
+					get_template_part( 'template-parts/content', 'campanas' );
+				}
+				if(is_page('listado_campanas')){
+					get_template_part( 'template-parts/content', 'listado-campanas' );
+				}
  		}	
 
 ?>

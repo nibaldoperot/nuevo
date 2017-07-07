@@ -33,6 +33,10 @@ jQuery( document ).ready( function( $ ) {
         window.location.href = window.location.href + 'perfiles'
     })
 
+    $('.ver_campanas').click(function(){
+        window.location.href = window.location.href + 'campanas'
+    })
+
     $('.ver_todas').click(function(){
         var seleccion_tipo = $('.btn-success').text().slice(0,-1).toLowerCase()
         console.log(seleccion_tipo)
@@ -89,5 +93,4 @@ jQuery( document ).ready( function( $ ) {
 
     })
 
-    
 })

@@ -93,6 +93,14 @@ function jsfromgulp(){
 
 add_action('init', 'jsfromgulp');
 
+//Agrergo JQueryUI despues de Jquery
+function jqueryUI(){
+	wp_enqueue_script( 'jquery-ui','https://code.jquery.com/ui/1.12.1/jquery-ui.js', array('jquery'), '1.0.0', false );
+	wp_script_add_data( 'jquery-ui', 'conditional', '' );
+}
+
+add_action('init', 'jqueryUI');
+
 if ( !function_exists( 'mvpwp_the_custom_logo' ) ) :
 /**
  * Displays the optional custom logo.
@@ -168,10 +176,52 @@ function create_posttype() {
 		)
 	);
 
+	register_post_type( 'Campanas',
+	// CPT Options
+		array(
+			'labels' => array(
+				'name' => __( 'Campanas' ),
+				'singular_name' => __( 'Campana' )
+			),
+			'public' => true,
+			'has_archive' => true,
+			'rewrite' => array('slug' => 'Campanas'),
+		)
+	);
+
+	register_post_type( 'Participantes',
+	// CPT Options
+		array(
+			'labels' => array(
+				'name' => __( 'Participantes' ),
+				'singular_name' => __( 'Participante' )
+			),
+			'public' => true,
+			'has_archive' => true,
+			'rewrite' => array('slug' => 'Participantes'),
+		)
+	);
+
 }
 // Hooking up our function to theme setup 
 add_action( 'init', 'create_posttype' );
 
+
+add_filter('acf/load_field/name=user_groups', 'populateUserGroups');
+
+function populateUserGroups( $field )
+{	
+	// reset choices
+	$field['choices'] = array();
+	
+	$users = get_users();
+	
+	foreach ($users as $user) {
+		$field['choices'][ $user->ID ] = $user->display_name;
+	}
+
+	return $field;
+}
 
 //Remove admin bar from user externo (upper menu)
 function my_admin_bar_render() {
@@ -238,7 +288,7 @@ function rename_media_button( $translation, $text ) {
     }
     return $translation;
 }
-add_filter( 'gettext', rename_media_button, 10, 2 );
+add_filter( 'gettext', 'rename_media_button', 10, 2 );
 
 //Change text Submit for Review
 function rename_submit( $translation, $text ) {
@@ -247,7 +297,7 @@ function rename_submit( $translation, $text ) {
     }
     return $translation;
 }
-add_filter( 'gettext', rename_submit, 10, 2 );
+add_filter( 'gettext', 'rename_submit', 10, 2 );
 
 //Change text Add New Post
 function rename_agregar( $translation, $text ) {
@@ -256,7 +306,7 @@ function rename_agregar( $translation, $text ) {
     }
     return $translation;
 }
-add_filter( 'gettext', rename_agregar, 10, 2 );
+add_filter( 'gettext', 'rename_agregar', 10, 2 );
 
 function rename_placeholder_titulo( $translation, $text ) {
     if( is_admin() && 'Introduce el título aquí' === $text ) {
@@ -264,7 +314,7 @@ function rename_placeholder_titulo( $translation, $text ) {
     }
     return $translation;
 }
-add_filter( 'gettext', rename_placeholder_titulo, 10, 2 );
+add_filter( 'gettext', 'rename_placeholder_titulo', 10, 2 );
 
 
 function wpfstop_change_default_title( $title ){
@@ -317,7 +367,23 @@ function theme_styles()
 }
 add_action('wp_enqueue_scripts', 'theme_styles');
 
+function JqueryUiCss()  
+{ 
+	wp_register_style( 'jqueryui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css' );
+	wp_enqueue_style('jqueryui');
+	//Validación de formulario JQuery para generar nuevo post desde vista
+	// custom jquery
+	wp_register_script( 'custom_js', get_template_directory_uri() . '/js/jquery.custom.js', array( 'jquery' ), '1.0', TRUE );
+	wp_enqueue_script( 'custom_js' );
+	
+	// validation
+	wp_register_script( 'validation', 'http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js', array( 'jquery' ) );
+	wp_enqueue_script( 'validation' );
 
+}
+add_action('wp_enqueue_scripts', 'JqueryUiCss');
+
+//Ajax Cambio de estado de Pago
 function update_pago() {
 
 	$post_id = $_POST['post_id'];
@@ -333,6 +399,8 @@ function update_pago() {
 }
 add_action( 'wp_ajax_nopriv_update_pago',  'update_pago' );
 add_action( 'wp_ajax_update_pago','update_pago' );
+
+
 
 
 

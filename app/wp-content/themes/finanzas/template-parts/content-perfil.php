@@ -1,8 +1,7 @@
-<button type="button" style="width:23%;" class="fa fa-arrow-left perfil_volver btn btn-default btn-sm ">Volver</button>
+<button type="button" style="width:23%;" class="perfil_volver btn btn-default btn-sm ">Volver</button>
 <button type="button" style="width:23%;" class="ver_todas btn btn-default btn-sm ">Todas</button>
 <button type="button" style="width:23%;" class="ver_pagadas btn btn-default btn-sm ">Pagadas</button>
 <button type="button" style="width:23%;" class="ver_pendientes btn btn-default btn-sm ">Pendientes</button>
-
                         
 <?php
 $args = array(

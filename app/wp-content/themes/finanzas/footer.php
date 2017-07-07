@@ -32,7 +32,7 @@
           <?php $footer_social = get_theme_mod( 'footer_social', '' );
 
             if (count($footer_social) > '0' ) : 
-              foreach ($footer_social as $social) : 
+              /*foreach ($footer_social as $social) : 
                 $social_icon = "{$social['social_icon']}"; 
                 $social_url = "{$social['social_url']}";
                 
@@ -44,7 +44,7 @@
                 </a>
               <?php endif; ?>
 
-             <?php endforeach; ?>
+             <?php endforeach; */?>
             <?php endif; ?>
 
         </div>
@@ -62,6 +62,7 @@
 
     <script>
       jQuery( document ).ready( function( $ ) {
+        
         $('.ver_home').click(function(){
             window.location.href = "<?php echo get_home_url(); ?>"
         })
