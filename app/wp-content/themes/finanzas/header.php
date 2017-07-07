@@ -45,14 +45,17 @@ if ( isset( $_POST['submitted'] ) ) {
                 )
             );
             $category = get_cat_ID( $participante);
-            $post_information = array(
-                'post_title' => wp_strip_all_tags( $_POST['campana'] ),
-                'post_content' => $_POST['descripcion'],
-                'post_type' => 'post',
-                'post_status' => 'publish',
-                'post_category' => array(2,$category, $category_campana)
-            );
-            wp_insert_post( $post_information );
+            if($category != 0){
+                $post_information = array(
+                    'post_title' => wp_strip_all_tags( $_POST['campana'] ),
+                    'post_content' => $_POST['descripcion'],
+                    'post_type' => 'post',
+                    'post_status' => 'publish',
+                    'post_category' => array(2,$category, $category_campana)
+                );
+                wp_insert_post( $post_information );
+
+            }
         }
     }else{
         wp_insert_term(
