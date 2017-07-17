@@ -16,13 +16,11 @@ if ( !is_user_logged_in() ) {
 $postTitleError = '';
  
 if ( isset( $_POST['submitted'] ) ) {
- 
+
     if ( trim( $_POST['campana'] ) === '' ) {
         $postTitleError = 'Please enter a title.';
         $hasError = true;
     }
-    
-    
     
     $participantes = $_POST['participante'];
     if (strpos($participantes, ';') !== false) {
@@ -35,7 +33,8 @@ if ( isset( $_POST['submitted'] ) ) {
                 'parent'=> 'campana'
             )
         );
-        $category_campana = get_cat_ID( $_POST['campana']);
+        $category_campana_name = get_cat_ID( $_POST['campana']);
+        $category_campana = get_cat_ID('campana');
         foreach($array_participantes as $participante){
             wp_insert_term(
                 $participante, // the term 
@@ -51,12 +50,15 @@ if ( isset( $_POST['submitted'] ) ) {
                     'post_content' => $_POST['descripcion'],
                     'post_type' => 'post',
                     'post_status' => 'publish',
-                    'post_category' => array(2,$category, $category_campana)
+                    'post_category' => array(2,$category, $category_campana_name, $category_campana)
                 );
-                wp_insert_post( $post_information );
-
+                $post_id = wp_insert_post( $post_information );
+                update_field('participante', $participante, $post_id);
             }
         }
+        /*$page = get_page_by_title('listado');
+        wp_redirect(get_permalink($page->ID));
+        exit;*/
     }else{
         wp_insert_term(
             $participantes, // the term 
@@ -73,15 +75,20 @@ if ( isset( $_POST['submitted'] ) ) {
                 'parent'=> 'campana'
             )
         );
-        $category_campana = get_cat_ID( $_POST['campana']);
+        $category_campana_name = get_cat_ID( $_POST['campana']);
         $post_information = array(
             'post_title' => wp_strip_all_tags( $_POST['campana'] ),
             'post_content' => $_POST['descripcion'],
             'post_type' => 'post',
             'post_status' => 'publish',
-            'post_category' => array(2,$category, $category_campana)
-        );        
-        wp_insert_post( $post_information );
+            'post_category' => array(2,$category, $category_campana, $category_campana_name)
+        );
+
+        $post_id = wp_insert_post( $post_information );
+        update_field('participante', $participantes, $post_id);
+        /*$page = get_page_by_title('listado');
+        wp_redirect(get_permalink($page->ID));
+        exit;*/
 
     }
 

@@ -34,7 +34,15 @@ jQuery( document ).ready( function( $ ) {
     })
 
     $('.ver_campanas').click(function(){
-        window.location.href = window.location.href + 'campanas'
+        window.location.href = window.location.href + 'campana/listado'
+    })
+
+    $('.ver_comentarios').click(function(){
+        window.location.href = window.location.href + 'comentarios'
+    })
+
+    $('.agregar_campana').click(function(){
+        window.location.href = window.location.href + 'campanas/nueva'
     })
 
     $('.ver_todas').click(function(){
@@ -91,6 +99,42 @@ jQuery( document ).ready( function( $ ) {
         $(this).siblings().addClass('btn-default')        
         $(this).addClass('btn-success')
 
+    })
+
+    $('.filtro_valor').click(function(){
+        $(this).parent().siblings().removeClass('active')       
+        $(this).parent().addClass('active')       
+        $('.columna_oc').hide()
+        $('.columna_status').hide()
+        $('.columna_boleta').hide()
+        $('.columna_valor').show()
+    })
+
+    $('.filtro_oc').click(function(){
+        $(this).parent().siblings().removeClass('active')       
+        $(this).parent().addClass('active')
+        $('.columna_valor').hide()
+        $('.columna_status').hide()
+        $('.columna_boleta').hide()
+        $('.columna_oc').show()
+    })
+
+    $('.filtro_status').click(function(){
+        $(this).parent().siblings().removeClass('active')
+        $(this).parent().addClass('active')
+        $('.columna_valor').hide()
+        $('.columna_oc').hide()
+        $('.columna_boleta').hide()
+        $('.columna_status').show()
+    })
+
+    $('.filtro_boleta').click(function(){
+        $(this).parent().siblings().removeClass('active')
+        $(this).parent().addClass('active')
+        $('.columna_valor').hide()
+        $('.columna_oc').hide()
+        $('.columna_status').hide()
+        $('.columna_boleta').show()
     })
 
 })

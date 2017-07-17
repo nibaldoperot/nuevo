@@ -41,7 +41,7 @@ jQuery( document ).ready( function( $ ) {
         var participante = $('#tags').val()
         var participantes_actuales = $('#participante').val()
         console.log(participantes_actuales.length)
-        participantes_actuales.length == 0 ? $('#participante').val(participante) : $('#participante').val(participantes_actuales+';'+participante)
+        participantes_actuales.length == 0 ? $('#participante').val(participante+';') : $('#participante').val(participantes_actuales+';'+participante)
         //limpio input
         $('#tags').val('')
 

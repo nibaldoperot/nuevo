@@ -89,6 +89,10 @@ add_action( 'after_setup_theme', 'mvpwp_content_width', 0 );
 function jsfromgulp(){
 	wp_enqueue_script( 'finanzas', get_theme_file_uri( '/js/finanzas.min.js' ), array('jquery'), '1.0.0', false );
 	wp_script_add_data( 'finanzas', 'conditional', '' );
+
+	wp_enqueue_script( 'bootstrapswitch', get_theme_file_uri( '/js/dist/bootstrap-switch.min.js' ), array('jquery'), '1.0.0', false );
+	wp_script_add_data( 'bootstrapswitch', 'conditional', '' );
+
 }
 
 add_action('init', 'jsfromgulp');
@@ -149,58 +153,58 @@ add_filter( 'widget_tag_cloud_args', 'my_widget_tag_cloud_args' );
 // Our custom post type function
 function create_posttype() {
 
-	register_post_type( 'Facturas',
-	// CPT Options
-		array(
-			'labels' => array(
-				'name' => __( 'Facturas' ),
-				'singular_name' => __( 'Factura' )
-			),
-			'public' => true,
-			'has_archive' => true,
-			'rewrite' => array('slug' => 'Facturas'),
-		)
-	);
+	// register_post_type( 'Facturas',
+	// // CPT Options
+	// 	array(
+	// 		'labels' => array(
+	// 			'name' => __( 'Facturas' ),
+	// 			'singular_name' => __( 'Factura' )
+	// 		),
+	// 		'public' => true,
+	// 		'has_archive' => true,
+	// 		'rewrite' => array('slug' => 'Facturas'),
+	// 	)
+	// );
 
 
-	register_post_type( 'Boletas',
-	// CPT Options
-		array(
-			'labels' => array(
-				'name' => __( 'Boletas' ),
-				'singular_name' => __( 'Boleta' )
-			),
-			'public' => true,
-			'has_archive' => true,
-			'rewrite' => array('slug' => 'Boletas'),
-		)
-	);
+	// register_post_type( 'Boletas',
+	// // CPT Options
+	// 	array(
+	// 		'labels' => array(
+	// 			'name' => __( 'Boletas' ),
+	// 			'singular_name' => __( 'Boleta' )
+	// 		),
+	// 		'public' => true,
+	// 		'has_archive' => true,
+	// 		'rewrite' => array('slug' => 'Boletas'),
+	// 	)
+	// );
 
-	register_post_type( 'Campanas',
-	// CPT Options
-		array(
-			'labels' => array(
-				'name' => __( 'Campanas' ),
-				'singular_name' => __( 'Campana' )
-			),
-			'public' => true,
-			'has_archive' => true,
-			'rewrite' => array('slug' => 'Campanas'),
-		)
-	);
+	// register_post_type( 'Campanas',
+	// // CPT Options
+	// 	array(
+	// 		'labels' => array(
+	// 			'name' => __( 'Campanas' ),
+	// 			'singular_name' => __( 'Campana' )
+	// 		),
+	// 		'public' => true,
+	// 		'has_archive' => true,
+	// 		'rewrite' => array('slug' => 'Campanas'),
+	// 	)
+	// );
 
-	register_post_type( 'Participantes',
-	// CPT Options
-		array(
-			'labels' => array(
-				'name' => __( 'Participantes' ),
-				'singular_name' => __( 'Participante' )
-			),
-			'public' => true,
-			'has_archive' => true,
-			'rewrite' => array('slug' => 'Participantes'),
-		)
-	);
+	// register_post_type( 'Participantes',
+	// // CPT Options
+	// 	array(
+	// 		'labels' => array(
+	// 			'name' => __( 'Participantes' ),
+	// 			'singular_name' => __( 'Participante' )
+	// 		),
+	// 		'public' => true,
+	// 		'has_archive' => true,
+	// 		'rewrite' => array('slug' => 'Participantes'),
+	// 	)
+	// );
 
 }
 // Hooking up our function to theme setup 
@@ -363,6 +367,8 @@ function theme_styles()
 { 
 	wp_register_style( 'finanzascss', get_template_directory_uri() . '/css/finanzas.min.css' );
 	wp_enqueue_style('finanzascss');
+	wp_register_style( 'bootstrap-switch', get_template_directory_uri() . '/css/bootstrap-switch.min.css' );
+	wp_enqueue_style('bootstrap-switch');
 
 }
 add_action('wp_enqueue_scripts', 'theme_styles');
@@ -373,12 +379,15 @@ function JqueryUiCss()
 	wp_enqueue_style('jqueryui');
 	//Validación de formulario JQuery para generar nuevo post desde vista
 	// custom jquery
-	wp_register_script( 'custom_js', get_template_directory_uri() . '/js/jquery.custom.js', array( 'jquery' ), '1.0', TRUE );
-	wp_enqueue_script( 'custom_js' );
+	// wp_register_script( 'custom_js', get_template_directory_uri() . '/js/jquery.custom.js', array( 'jquery' ), '1.0', TRUE );
+	// wp_enqueue_script( 'custom_js' );
 	
 	// validation
-	wp_register_script( 'validation', 'http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js', array( 'jquery' ) );
-	wp_enqueue_script( 'validation' );
+	// wp_register_script( 'validation', 'http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js', array( 'jquery' ) );
+	// wp_enqueue_script( 'validation' );
+
+	//Bootstrap-switch
+	
 
 }
 add_action('wp_enqueue_scripts', 'JqueryUiCss');
@@ -401,8 +410,104 @@ add_action( 'wp_ajax_nopriv_update_pago',  'update_pago' );
 add_action( 'wp_ajax_update_pago','update_pago' );
 
 
+function agrega_comentario(){
+	$time = current_time('mysql');
+	$comment_post_ID = $_POST['comment_post_ID'];
+	$comment_author = $_POST['comment_author'];
+	$comment_author_email = $_POST['comment_author_email'];
+	$comment_content = $_POST['comment_content'];
+	$user_id = $_POST['user_id'];
+	
+	$data = array(
+		'comment_post_ID' => $comment_post_ID,
+		'comment_author' => $comment_author,
+		'comment_author_email' => $comment_author_email,
+		'comment_content' => $comment_content,
+		'user_id' => $user_id,
+		'comment_agent' => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.10) Gecko/2009042316 Firefox/3.0.10 (.NET CLR 3.5.30729)',
+		'comment_date' => $time,
+		'comment_approved' => 1,
+	);
+
+	wp_insert_comment($data);
+}
+
+add_action( 'wp_ajax_nopriv_agrega_comentario',  'agrega_comentario' );
+add_action( 'wp_ajax_agrega_comentario','agrega_comentario' );
 
 
+function cambiar_valor_oc(){
+
+	$valor_oc =$_POST['valor_oc'];
+	$post_id =$_POST['post_id'];
+	update_field('valor_oc', $valor_oc, $post_id);
+
+	echo 'valor_oc'.$valor_oc;
+	echo 'post_id'.$post_id;
+}
+
+add_action( 'wp_ajax_nopriv_cambiar_valor_oc',  'cambiar_valor_oc' );
+add_action( 'wp_ajax_cambiar_valor_oc','cambiar_valor_oc' );
+
+
+function cambiar_pago(){
+
+	$status = $_POST['status'];
+	$post_id = $_POST['post_id'];
+	if($status == 0 ){
+		$status = true;
+	}else{
+		$status = false;
+	}
+	update_field('Pago', $status, $post_id);
+}
+
+add_action( 'wp_ajax_nopriv_cambiar_pago',  'cambiar_pago' );
+add_action( 'wp_ajax_cambiar_pago','cambiar_pago' );
+
+
+
+
+function agregar_boleta() {
+
+
+	if( 'POST' == $_SERVER['REQUEST_METHOD']  ) {
+		if ( $_FILES ) { 
+			$files = $_FILES["kv_multiple_attachments"];  
+			foreach ($files['name'] as $key => $value) { 			
+					if ($files['name'][$key]) { 
+						$file = array( 
+							'name' => $files['name'][$key],
+							'type' => $files['type'][$key], 
+							'tmp_name' => $files['tmp_name'][$key], 
+							'error' => $files['error'][$key],
+							'size' => $files['size'][$key]
+						); 
+						$_FILES = array ("kv_multiple_attachments" => $file); 
+						foreach ($_FILES as $file => $array) {				
+							if ($_FILES[$file_handler]['error'] !== UPLOAD_ERR_OK) __return_false();
+
+							require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+							require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+							require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+
+							$attach_id = media_handle_upload( $file, $pid );
+
+								// If you want to set a featured image frmo your uploads. 
+							if ($set_thu) set_post_thumbnail($pid, $attach_id);
+							return $attach_id;
+
+						}
+					} 
+				} 
+		}
+
+	}
+
+	
+}
+add_action( 'wp_ajax_nopriv_agregar_boleta',  'agregar_boleta' );
+add_action( 'wp_ajax_agregar_boleta','agregar_boleta' );
 
 /*********************************************************************************************/
 
