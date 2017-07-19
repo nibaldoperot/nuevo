@@ -35,8 +35,6 @@ jQuery( document ).ready( function( $ ) {
         source: availableTags
     });
 
-        
-
     $('.agrega_participantes').click(function(){
         var participante = $('#tags').val()
         var participantes_actuales = $('#participante').val()

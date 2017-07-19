@@ -280,7 +280,12 @@ add_filter( 'admin_bar_menu', 'change_howdy', 25 );
 
 //redirect on login
 function admin_default_page() {
-  return admin_url( 'edit.php?post_type=facturas');
+	$user = wp_get_current_user();
+		// if($user->roles[0] == 'administrator'){ 
+  			return get_home_url();
+		// }else{
+			// return "http://192.168.0.32/_Finanzas/htdocs/app/campana/listado/";
+		// }
 }
 
 add_filter('login_redirect', 'admin_default_page');
@@ -410,40 +415,17 @@ add_action( 'wp_ajax_nopriv_update_pago',  'update_pago' );
 add_action( 'wp_ajax_update_pago','update_pago' );
 
 
-function agrega_comentario(){
-	$time = current_time('mysql');
-	$comment_post_ID = $_POST['comment_post_ID'];
-	$comment_author = $_POST['comment_author'];
-	$comment_author_email = $_POST['comment_author_email'];
-	$comment_content = $_POST['comment_content'];
-	$user_id = $_POST['user_id'];
-	
-	$data = array(
-		'comment_post_ID' => $comment_post_ID,
-		'comment_author' => $comment_author,
-		'comment_author_email' => $comment_author_email,
-		'comment_content' => $comment_content,
-		'user_id' => $user_id,
-		'comment_agent' => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.10) Gecko/2009042316 Firefox/3.0.10 (.NET CLR 3.5.30729)',
-		'comment_date' => $time,
-		'comment_approved' => 1,
-	);
-
-	wp_insert_comment($data);
-}
-
-add_action( 'wp_ajax_nopriv_agrega_comentario',  'agrega_comentario' );
-add_action( 'wp_ajax_agrega_comentario','agrega_comentario' );
-
-
 function cambiar_valor_oc(){
 
 	$valor_oc =$_POST['valor_oc'];
 	$post_id =$_POST['post_id'];
-	update_field('valor_oc', $valor_oc, $post_id);
 
-	echo 'valor_oc'.$valor_oc;
-	echo 'post_id'.$post_id;
+	$my_post = array(
+		'ID'           => $post_id,
+	);
+	wp_update_post( $my_post );
+	update_post_meta( $post_id, 'valor_oc', $valor_oc, '' );
+	update_field('valor_oc', $valor_oc, $post_id);
 }
 
 add_action( 'wp_ajax_nopriv_cambiar_valor_oc',  'cambiar_valor_oc' );
@@ -454,60 +436,21 @@ function cambiar_pago(){
 
 	$status = $_POST['status'];
 	$post_id = $_POST['post_id'];
-	if($status == 0 ){
-		$status = true;
-	}else{
-		$status = false;
+	echo $status;
+	if($status == 'false' ){
+		echo "entre";
+		update_post_meta( $post_id, 'pago', True, '' );
+		update_field('pago', True, $post_id);
 	}
-	update_field('Pago', $status, $post_id);
+	if($status == 'true'){
+		update_post_meta( $post_id, 'pago', False, '' );
+		update_field('Pago', False, $post_id);
+	}
+	
 }
 
 add_action( 'wp_ajax_nopriv_cambiar_pago',  'cambiar_pago' );
 add_action( 'wp_ajax_cambiar_pago','cambiar_pago' );
-
-
-
-
-function agregar_boleta() {
-
-
-	if( 'POST' == $_SERVER['REQUEST_METHOD']  ) {
-		if ( $_FILES ) { 
-			$files = $_FILES["kv_multiple_attachments"];  
-			foreach ($files['name'] as $key => $value) { 			
-					if ($files['name'][$key]) { 
-						$file = array( 
-							'name' => $files['name'][$key],
-							'type' => $files['type'][$key], 
-							'tmp_name' => $files['tmp_name'][$key], 
-							'error' => $files['error'][$key],
-							'size' => $files['size'][$key]
-						); 
-						$_FILES = array ("kv_multiple_attachments" => $file); 
-						foreach ($_FILES as $file => $array) {				
-							if ($_FILES[$file_handler]['error'] !== UPLOAD_ERR_OK) __return_false();
-
-							require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-							require_once(ABSPATH . "wp-admin" . '/includes/file.php');
-							require_once(ABSPATH . "wp-admin" . '/includes/media.php');
-
-							$attach_id = media_handle_upload( $file, $pid );
-
-								// If you want to set a featured image frmo your uploads. 
-							if ($set_thu) set_post_thumbnail($pid, $attach_id);
-							return $attach_id;
-
-						}
-					} 
-				} 
-		}
-
-	}
-
-	
-}
-add_action( 'wp_ajax_nopriv_agregar_boleta',  'agregar_boleta' );
-add_action( 'wp_ajax_agregar_boleta','agregar_boleta' );
 
 /*********************************************************************************************/
 

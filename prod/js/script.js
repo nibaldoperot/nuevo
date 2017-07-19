@@ -37,6 +37,10 @@ jQuery( document ).ready( function( $ ) {
         window.location.href = window.location.href + 'campana/listado'
     })
 
+    $('.ver_chat').click(function(){
+        window.location.href = window.location.href + 'chat'
+    })
+
     $('.ver_comentarios').click(function(){
         window.location.href = window.location.href + 'comentarios'
     })
@@ -136,5 +140,7 @@ jQuery( document ).ready( function( $ ) {
         $('.columna_status').hide()
         $('.columna_boleta').show()
     })
+
+    
 
 })

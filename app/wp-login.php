@@ -148,7 +148,7 @@ function login_header( $title = 'Log In', $message = '', $wp_error = '' ) {
 
 	?>
 	</head>
-	<body class="login <?php echo esc_attr( implode( ' ', $classes ) ); ?>">
+	<body style="background-color:black" class="login <?php echo esc_attr( implode( ' ', $classes ) ); ?>">
 	<?php
 	/**
 	 * Fires in the login page header after the body tag is opened.
@@ -158,7 +158,8 @@ function login_header( $title = 'Log In', $message = '', $wp_error = '' ) {
 	do_action( 'login_header' );
 	?>
 	<div id="login">
-		<h1><a href="<?php echo esc_url( $login_header_url ); ?>" title="<?php echo esc_attr( $login_header_title ); ?>" tabindex="-1"><?php bloginfo( 'name' ); ?></a></h1>
+		<!-- <h1><a href="<?php echo esc_url( $login_header_url ); ?>" title="<?php echo esc_attr( $login_header_title ); ?>" tabindex="-1"><?php bloginfo( 'name' ); ?></a></h1> -->
+		 <h1><img style="width:100%" id="site-logo-start" class="site-logo" src="http://montana-studio.com/wp-content/uploads/2015/04/logo-color.svg" alt="Montana Studio"></h1> 
 	<?php
 
 	unset( $login_header_url, $login_header_title );
