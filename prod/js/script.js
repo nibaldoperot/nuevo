@@ -141,6 +141,63 @@ jQuery( document ).ready( function( $ ) {
         $('.columna_boleta').show()
     })
 
+
+    var home_url = $("#main").attr("data-home-url")
+    var logout_url = $("#main").attr("data-logout-url")
+        
+    // $("[name='my-checkbox']").bootstrapSwitch();
+        
+    $('.ver_home').click(function(){
+        window.location.href = home_url
+    })
+    
+     $('.subir_oc').click(function(){
+        var post_id = $(this).closest( "tr" ).attr('data-post-id')
+        window.location.href = home_url+"/campana/subir?post_id="+post_id+"&tipo=oc"
+    })
+
+    $('.logout').click(function(){
+        window.location.href = logout_url
+    })
+
+
+    $('.subir_boleta').click(function(){
+        var post_id = $(this).closest( "tr" ).attr('data-post-id')
+        window.location.href = home_url+"/campana/subir?post_id="+post_id+"&tipo=boleta"
+    })
+
+    $('.cambiar_valor_oc').click(function(){
+        //Cambios en vista
+        $(this).siblings('input').prop("disabled", false);
+        $(this).siblings('.guardar_valor_oc').show();
+        $(this).hide();
+    })
+
+    $('.guardar_valor_oc').click(function(){
+        //cambios en vista
+        $(this).siblings('input').prop("disabled", true);
+        $(this).siblings('.cambiar_valor_oc').show();
+        $(this).hide();
+        
+        //variables para funcion
+        var valor_oc = $(this).siblings('input').val()
+        var post_id = $(this).closest( "tr" ).attr('data-post-id')
+
+        //llamada ajax
+        $.ajax({
+        url: "http://192.168.0.32/_Finanzas/htdocs/app/" + "wp-admin/admin-ajax.php" + "?action=cambiar_valor_oc",
+        type: 'post',
+        data: {
+            valor_oc: valor_oc,
+            post_id: post_id
+        },
+        success: function(data) {
+            console.log(data)
+        },
+        error: function(data) {
+        }
+        })
+    })
     
 
 })

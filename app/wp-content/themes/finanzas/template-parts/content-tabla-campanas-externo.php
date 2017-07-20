@@ -32,6 +32,8 @@
             );
             $number = intval(get_post_meta( $post->ID, 'oc')[0]);
             $children_oc = get_children( $args );
+        }else{
+            $children_oc = null;
         }
 
         if(get_post_meta( $post->ID, 'boleta')){
@@ -71,14 +73,27 @@
                 </small>
             </td>
             <td class="columna_oc">
-            <?php if(!$children_oc){ $tipo= 'div';$columna_oc="";}else{$tipo= 'a';$columna_oc = 'Ver';} ?>
+            <?php if($children_oc){$tipo= 'a';$columna_oc = 'Ver'; }else{$tipo= 'div';$columna_oc="No se ha subido";} ?>
                 <small>
                         <<?php echo $tipo;?> href="<?php echo $children_oc[$number]->guid ?>" class="<?php echo $class; ?>">
                         <?php echo $columna_oc; ?><<?php echo $tipo;?>/>
                 </small>
             </td>
              <td class="columna_boleta">
-            <?php if(!$children_boleta){ $tipo= 'div';$columna_boleta = 'Subir boleta';$class="subir_boleta";}else{$tipo= 'a';$columna_boleta = 'Ver';} ?>
+            <?php if(!$children_oc) {
+                    $tipo= 'div';
+                    $columna_boleta = 'No hay OC';
+                  }else{ 
+                    if(!$children_boleta){ 
+                        $tipo= 'div';
+                        $columna_boleta = 'Subir boleta';
+                        $class="subir_boleta";
+                    }else{
+                        $tipo= 'a';
+                        $columna_boleta = 'Ver';
+                    } 
+
+                  } ?>
                 <small>
                         <<?php echo $tipo;?> href="<?php echo $children[$number]->guid ?>" class="<?php echo $class; ?>">
                         <?php echo $columna_boleta; ?><<?php echo $tipo;?>/>

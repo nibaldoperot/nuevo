@@ -1,3 +1,6 @@
+        <button type="button" style="width:48%;" class="btn btn-default ver_home btn-lg"> Home</button>
+        <button type="button" style="width:48%;" class="btn btn-default logout btn-lg"> Logout</button>
+
 <?php 
         $blogusers = get_users( 'role=usuario_externo' );
         // Array of WP_User objects.
@@ -14,16 +17,16 @@
                 <label class="active" for="campana">Campaña</label>
                 <input type="text" id="campana" name="campana" placeholder="Ingrese el nombre de la campaña" class="form-control">
                 <label class="active" for="campana">Descripción</label>
-                <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese la descripción de la campaña" class="form-control">
+                 <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese la descripción de la campaña" class="form-control"> 
                 <div class="ui-widget">
                     <input id="tags" placeholder="escriba un nombre" class="form-control">
-                    <button type="button" class="btn btn-default agrega_participantes">Agregar</button>
+                    <button type="button" class="btn btn-info agrega_participantes">Agregar</button>
                 </div>
                 <label class="active" for="participante">Participantes de la Campaña</label>
                 <input type="text" id="participante" name="participante" placeholder="Listado de Participantes" class="form-control">
                 <input style="display:none" type="text" class="listado_participantes required" value="<?php echo $users; ?>" placeholder="Actualmente no hay participantes"/>
                 <input type="hidden" name="submitted" id="submitted" value="true" />
-                <button type="submit" class="btn btn-default" style="width:100%">Agregar Campaña</button>
+                <button type="submit" class="btn btn-success" style="width:100%">Agregar Campaña</button>
 
             </div>
         </form>
