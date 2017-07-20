@@ -8,7 +8,7 @@ th, td {
 .guardar_valor_oc{
     display:none;
 }
-.columna_oc, .columna_status, .columna_boleta{
+.columna_oc, .columna_status, .columna_boleta, .columna_pago{
     display:none;
 }
 input{
@@ -31,10 +31,9 @@ input{
                         <th class="columna_participante"><small>Participante</small></th>
                         <th class="columna_valor"><small>Valor</small></th>
                         <th class="columna_oc"><small>OC</small></th>
-                        <th class="columna_status"><small>Status</small></th>   
+                        <th class="columna_status"><small>Activa</small></th>   
                         <th class="columna_boleta"><small>Boleta</small></th>
-                        <!--<th class="tabla_campana_inicial_primario"><small>Comentario</small></th>  btn para agregar comentario -->
-                        <!--<th class="tabla_campana_comentario" style="display:none"><small></small></th>  formulario comentario -->
+                        <th class="columna_pago"><small>Pago</small></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,10 +51,11 @@ input{
                     <li class="nav-item">
                         <a class="nav-link filtro_boleta" data-toggle="tab" role="tab">Boletas</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link filtro_pago" data-toggle="tab" role="tab">Pago</a>
+                    </li>
                 </ul>
-                    <?php //get_template_part( 'template-parts/content', 'tabla-campanas' ); ?>
                     <?php get_template_part( 'template-parts/content', 'tabla-campanas-admin' ); ?>
-                        
                 </div>
                 </tbody>
             </table>
@@ -68,6 +68,7 @@ input{
                                 <th class="columna_valor"><small>Valor</small></th>
                                 <th class="columna_oc"><small>OC</small></th>
                                 <th class="columna_boleta"><small>Boleta</small></th>
+                                <th class="columna_pago"><small>Pago</small></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -81,6 +82,9 @@ input{
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link filtro_boleta" data-toggle="tab" role="tab">Boletas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link filtro_pago" data-toggle="tab" role="tab">Pago</a>
                             </li>
                         </ul>
                             <?php get_template_part( 'template-parts/content', 'tabla-campanas-externo' ); ?>

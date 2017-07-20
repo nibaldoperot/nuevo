@@ -1,7 +1,7 @@
 <style>
 #my-div
 {
-    width    : 800px;
+    width    : 100%;
     height   : 900px;
     overflow : hidden;
     position : relative;
@@ -11,9 +11,9 @@
 {
     position : absolute;
     top      : -100px;
-    left     : -100px;
-    width    : 1280px;
-    height   : 1200px;
+    left     : 0px;
+    width    : 100%; 
+    height   : 100%;
 }
 </style>
 <button type="button" style="width:48%;" class="btn btn-default ver_home btn-lg"> Home</button>

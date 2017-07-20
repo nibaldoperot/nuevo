@@ -45,20 +45,22 @@
         $('[name="my-checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
 
           var post_id = $(this).closest( "tr" ).attr('data-post-id')
-          var status = $(this).closest( ".columna_status" ).attr('data-status')
+          var status = $(this).closest( "td" ).data('status')
+          var field = $(this).closest( "td" ).data('field')
+          console.log(status)
           if(status == 0){
             status = false
           }else{
             status = true
           }
-
           //llamada ajax
           $.ajax({
-            url: "http://192.168.0.32/_Finanzas/htdocs/app/" + "wp-admin/admin-ajax.php" + "?action=cambiar_pago",
+            url: "http://192.168.0.32/_Finanzas/htdocs/app/" + "wp-admin/admin-ajax.php" + "?action=cambiar_status",
             type: 'post',
             data: {
                 status: status,
-                post_id: post_id
+                post_id: post_id,
+                field: field
             },
             success: function(data) {
               console.log(data)

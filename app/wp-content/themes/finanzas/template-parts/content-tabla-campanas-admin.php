@@ -43,6 +43,31 @@
         }else{
             $children_oc = null;
         }
+
+
+        if(get_post_meta( $post->ID, 'status')){
+            $args = array(
+                'post_parent' => $post->ID,
+                'post_type'   => 'any', 
+                'numberposts' => -1,
+                'post_status' => 'any' 
+            );
+            $status = intval(get_post_meta( $post->ID, 'status')[0]);
+        }else{
+            $status = 0;
+        }
+        
+        if(get_post_meta( $post->ID, 'pago')){
+            $args = array(
+                'post_parent' => $post->ID,
+                'post_type'   => 'any', 
+                'numberposts' => -1,
+                'post_status' => 'any' 
+            );
+            $pago = intval(get_post_meta( $post->ID, 'pago')[0]);
+        }else{
+            $pago = 0;
+        }
         
         ?>
 
@@ -64,11 +89,11 @@
                         <?php echo $columna_oc; ?><<?php echo $tipo;?>/>
                 </small>
             </td>
-            <td class="columna_status" data-status="<?php echo intval(get_field('pago'))?>">
+            <td class="columna_status" data-status="<?php echo $status;?>" data-field="status">
                 <small>
                     <input class="cambiar_status" data-size="mini" data-handle-width="30" data-off-text="Pend" 
                             style="width:100% !important" data-on-text="OK" type="checkbox" name="my-checkbox" 
-                            <?php if(get_post_meta( $post->ID, 'pago') && intval(get_post_meta( $post->ID, 'pago')[0])== 1) echo "checked"; ?> >                            
+                            <?php if(get_post_meta( $post->ID, 'status') && intval(get_post_meta( $post->ID, 'status')[0])== 1) echo "checked"; ?> >                            
                 </small>
             </td>
             <td class="columna_boleta">
@@ -78,15 +103,13 @@
                         <?php echo $columna_boleta; ?><<?php echo $tipo;?>/>
                 </small>
             </td>
-            <!-- Modulo para Agregar Comentarios en Campañas -->
-            <!--<td class="tabla_campana_inicial tabla_campana_inicial_primario"><small>
-                <button class="muestra_form_comentario">Agregar</button></small></td>
-            <td class="tabla_campana_comentario" style="display:none">
+            <td class="columna_pago" data-status="<?php echo $pago; ?>" data-field="pago">
                 <small>
-                    <input type="text" class="comentario" data-post-id="<?php //echo $post->ID;?>" placeholder="Comentario"/>
-                    <button class="agrega_comentario">Comentar</button>
+                    <input class="cambiar_pago" data-size="mini" data-handle-width="30" data-off-text="Pend" 
+                            style="width:100% !important" data-on-text="OK" type="checkbox" name="my-checkbox" 
+                            <?php if(get_post_meta( $post->ID, 'pago') && intval(get_post_meta( $post->ID, 'pago')[0])== 1) echo "checked"; ?> >                            
                 </small>
-            </td>-->
+            </td>
             
         </tr>
     <?php endwhile; ?>

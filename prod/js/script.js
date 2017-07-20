@@ -41,6 +41,10 @@ jQuery( document ).ready( function( $ ) {
         window.location.href = window.location.href + 'chat'
     })
 
+    $('.agregar_usuario').click(function(){
+        window.location.href = window.location.href + 'usuario'
+    })
+
     $('.ver_comentarios').click(function(){
         window.location.href = window.location.href + 'comentarios'
     })
@@ -111,6 +115,7 @@ jQuery( document ).ready( function( $ ) {
         $('.columna_oc').hide()
         $('.columna_status').hide()
         $('.columna_boleta').hide()
+        $('.columna_pago').hide()
         $('.columna_valor').show()
     })
 
@@ -120,6 +125,7 @@ jQuery( document ).ready( function( $ ) {
         $('.columna_valor').hide()
         $('.columna_status').hide()
         $('.columna_boleta').hide()
+        $('.columna_pago').hide()
         $('.columna_oc').show()
     })
 
@@ -129,6 +135,7 @@ jQuery( document ).ready( function( $ ) {
         $('.columna_valor').hide()
         $('.columna_oc').hide()
         $('.columna_boleta').hide()
+        $('.columna_pago').hide()
         $('.columna_status').show()
     })
 
@@ -138,7 +145,18 @@ jQuery( document ).ready( function( $ ) {
         $('.columna_valor').hide()
         $('.columna_oc').hide()
         $('.columna_status').hide()
+        $('.columna_pago').hide()
         $('.columna_boleta').show()
+    })
+
+    $('.filtro_pago').click(function(){
+        $(this).parent().siblings().removeClass('active')
+        $(this).parent().addClass('active')
+        $('.columna_valor').hide()
+        $('.columna_oc').hide()
+        $('.columna_status').hide()
+        $('.columna_boleta').hide()
+        $('.columna_pago').show()
     })
 
 

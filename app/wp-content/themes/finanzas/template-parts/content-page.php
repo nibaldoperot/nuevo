@@ -18,6 +18,9 @@
 					if(is_page('chat')){
 						get_template_part('template-parts/content', 'chat');
 					}
+					if(is_page('usuario')){
+						get_template_part('template-parts/content', 'agrega-usuario');
+					}
 			}	
 		}else{ 
 			if(is_page('home')){

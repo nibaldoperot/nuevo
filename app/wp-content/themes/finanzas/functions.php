@@ -432,25 +432,25 @@ add_action( 'wp_ajax_nopriv_cambiar_valor_oc',  'cambiar_valor_oc' );
 add_action( 'wp_ajax_cambiar_valor_oc','cambiar_valor_oc' );
 
 
-function cambiar_pago(){
+function cambiar_status(){
 
 	$status = $_POST['status'];
 	$post_id = $_POST['post_id'];
-	echo $status;
+	$field = $_POST['field'];
 	if($status == 'false' ){
 		echo "entre";
-		update_post_meta( $post_id, 'pago', True, '' );
-		update_field('pago', True, $post_id);
+		update_post_meta( $post_id, $field, True, '' );
+		update_field($field, True, $post_id);
 	}
 	if($status == 'true'){
-		update_post_meta( $post_id, 'pago', False, '' );
-		update_field('Pago', False, $post_id);
+		update_post_meta( $post_id, $field, False, '' );
+		update_field($field, False, $post_id);
 	}
 	
 }
 
-add_action( 'wp_ajax_nopriv_cambiar_pago',  'cambiar_pago' );
-add_action( 'wp_ajax_cambiar_pago','cambiar_pago' );
+add_action( 'wp_ajax_nopriv_cambiar_status',  'cambiar_status' );
+add_action( 'wp_ajax_cambiar_status','cambiar_status' );
 
 /*********************************************************************************************/
 

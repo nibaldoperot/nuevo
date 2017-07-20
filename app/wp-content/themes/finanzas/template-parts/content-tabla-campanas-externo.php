@@ -48,8 +48,19 @@
         }else{
             $children_boleta = null;
         }
-        
 
+        if(get_post_meta( $post->ID, 'status')){
+            $args = array(
+                'post_parent' => $post->ID,
+                'post_type'   => 'any', 
+                'numberposts' => -1,
+                'post_status' => 'any' 
+            );
+            $status = intval(get_post_meta( $post->ID, 'status')[0]);
+        }else{
+            $status = 0;
+        }
+        
         if(get_post_meta( $post->ID, 'pago')){
             $args = array(
                 'post_parent' => $post->ID,
@@ -57,12 +68,12 @@
                 'numberposts' => -1,
                 'post_status' => 'any' 
             );
-            $pago = get_post_meta( $post->ID, 'pago');
+            $pago = intval(get_post_meta( $post->ID, 'pago')[0]);
         }else{
-            $pago = null;
+            $pago = 0;
         }
 
-        if($pago[0]){ ?>
+        if($status == 1){ ?>
 
         <tr data-post-id="<?php echo $post->ID; ?>">
 
@@ -97,6 +108,12 @@
                 <small>
                         <<?php echo $tipo;?> href="<?php echo $children[$number]->guid ?>" class="<?php echo $class; ?>">
                         <?php echo $columna_boleta; ?><<?php echo $tipo;?>/>
+                </small>
+            </td>
+            <td class="columna_pago">
+                <small>
+                    <input style="width:100% !important" name="my-checkbox" data-size="mini" data-handle-width="30" 
+                           data-off-text="Pend" data-on-text="OK" type="checkbox" name="my-checkbox"  <?php if($pago == 1) echo "checked"; ?> >                            
                 </small>
             </td>
         </tr>
